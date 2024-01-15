@@ -11,8 +11,22 @@ import java.util.List;
 public class Section extends BaseModel{
 
 
+    public Section(){}
+
+    public Section(int rows , int columns, SeatClass seatClass, Flight flight){
+        this.rows = rows;
+        this.columns = columns;
+        this.seatClass = seatClass;
+        this.flight = flight;
+        this.availableSeatsCount = rows * columns;
+    }
+
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
+    }
+
     @Column
-    private int AvailableSeatsCount;
+    private int availableSeatsCount;
 
     @Column(nullable = false)
     @Size(min = ModelConstants.SECTION_MIN_ROWS , max = ModelConstants.SECTION_MAX_ROWS)
@@ -23,7 +37,7 @@ public class Section extends BaseModel{
     private int columns;
 
     @Column
-    public SeatClass SeatClass;
+    public SeatClass seatClass;
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL , orphanRemoval = true)
     private List<Seat> seats = new ArrayList<>();

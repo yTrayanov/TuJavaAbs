@@ -7,6 +7,16 @@ import javax.validation.constraints.Max;
 @Entity
 public class Seat extends BaseModel {
 
+
+    public Seat(){}
+
+    public Seat(int row, int col, Section section){
+        this.row = row;
+        this.col = col;
+        this.section = section;
+        this.isBooked = false;
+    }
+
     @Column(nullable = false)
     private int row;
 
@@ -27,7 +37,10 @@ public class Seat extends BaseModel {
     private Ticket ticket;
 
     public String getSeatNumber(){
-        return this.row + "" + (char)(this.col - 1 + 'A');
+        return this.row + 1 + "" + (char)(this.col + 'A');
     }
 
+    public boolean isBooked() {
+        return isBooked;
+    }
 }

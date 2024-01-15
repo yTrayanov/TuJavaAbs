@@ -1,36 +1,44 @@
 package com.tujava.tujava.controller;
 
+import com.tujava.tujava.dto.AirportAirlineDto;
 import com.tujava.tujava.models.Airport;
 import com.tujava.tujava.services.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ExpressionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/airport")
 public class AirportController {
 
     @Autowired
     private AirportService airportService;
 
-    @PostMapping("/create/{name}")
-    public ResponseEntity<Void> createAirport(@PathVariable String name){
+    @PostMapping("/create/")
+    public ResponseEntity<String> createAirport(@RequestBody AirportAirlineDto model){
 
-        airportService.CreateAirport(name);
+        try{
+            airportService.CreateAirport(model.getName());
 
-        return new  ResponseEntity<>(HttpStatus.OK);
+            return new  ResponseEntity<>("Airport created",HttpStatus.OK);
+
+        } catch (ExpressionException e){
+            return new  ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 
 
     @GetMapping("/{name}")
-    public ResponseEntity<Airport> GetAirport(@PathVariable String name){
-        Airport airport = airportService.getAirportByName(name);
+    public ResponseEntity<Object> GetAirport(@PathVariable String name){
+        try{
+            Airport airport = airportService.getAirportByName(name);
 
-        return new ResponseEntity<>(airport, HttpStatus.OK);
+            return new ResponseEntity<>(airport, HttpStatus.OK);
+        } catch (ExpressionException e){
+            return new  ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -1,8 +1,8 @@
 package com.tujava.tujava.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public class FlightCreateDto {
+public class FlightCreateUpdateDto {
 
     public String getDepartureAirport() {
         return departureAirport;
@@ -20,11 +20,11 @@ public class FlightCreateDto {
         return flightNumber;
     }
 
-    public Date getDepartureDate() {
+    public LocalDate getDepartureDate() {
         return departureDate;
     }
 
-    public Date getLandingDate() {
+    public LocalDate getLandingDate() {
         return landingDate;
     }
 
@@ -34,8 +34,8 @@ public class FlightCreateDto {
 
     private String flightNumber;
 
-    private Date departureDate;
+    private LocalDate departureDate;
 
-    private Date landingDate;
+    private LocalDate landingDate;
 
 }

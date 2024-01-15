@@ -1,26 +1,30 @@
 package com.tujava.tujava.controller;
 
+import com.tujava.tujava.dto.AirportAirlineDto;
 import com.tujava.tujava.services.AirlineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ExpressionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/airline")
 public class AirlineController {
 
     @Autowired
     private AirlineService airlineService;
 
-    @PostMapping("/create/{name}")
-    public ResponseEntity<Void> createAirport(@PathVariable String name){
+    @PostMapping("/create/")
+    public ResponseEntity<String> createAirport(@RequestBody AirportAirlineDto model){
 
-        airlineService.CreateAirline(name);
+        try{
+            airlineService.CreateAirline(model.getName());
 
-        return new  ResponseEntity<>(HttpStatus.OK);
+            return new  ResponseEntity<>("Airline created",HttpStatus.OK);
+        } catch (ExpressionException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
