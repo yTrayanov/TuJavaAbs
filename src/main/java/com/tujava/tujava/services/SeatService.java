@@ -23,4 +23,22 @@ public class SeatService {
 
         return seats.get();
     }
+
+    public Seat FindSeatById(Long id){
+        Optional<Seat> seat = seatRepository.findById(id);
+
+        if(seat.isEmpty()){
+            throw new ExpressionException("Seat not found");
+        }
+
+        return seat.get();
+    }
+
+    public Seat BookSeat(Seat seat){
+        seat.setBooked(true);
+
+        seatRepository.save(seat);
+
+        return seat;
+    }
 }

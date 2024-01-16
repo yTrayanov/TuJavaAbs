@@ -43,4 +43,16 @@ public class Seat extends BaseModel {
     public boolean isBooked() {
         return isBooked;
     }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setBooked(boolean booked) {
+        isBooked = booked;
+    }
 }

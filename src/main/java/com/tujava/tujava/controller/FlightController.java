@@ -19,10 +19,13 @@ public class FlightController {
 
 
     @GetMapping("/{flightNumber}")
-    public ResponseEntity<FlightGetDto> GetFlight(@PathVariable String flightNumber){
-        FlightGetDto flight = flightService.GetFlight((flightNumber));
-
-        return new ResponseEntity<>(flight , HttpStatus.OK);
+    public ResponseEntity<Object> GetFlight(@PathVariable String flightNumber){
+        try{
+            FlightGetDto flight = flightService.GetFlight((flightNumber));
+            return new ResponseEntity<>(flight , HttpStatus.OK);
+        } catch (ExpressionException e){
+            return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/create/")
